@@ -21,7 +21,10 @@ $.addEventListener("DOMContentLoaded", async () => {
     const data = await response.json();
     console.log(data);
 
-    
+    if (!data || typeof data !== "object") {
+      console.error("Invalid response format!");
+      return;
+    }
   } catch (error) {
     console.error("Error fetching data:", error);
   }
