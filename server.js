@@ -8,7 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = 5000;
+const PORT = 5001;
 
 app.use(cors());
 app.use(express.json());
@@ -30,4 +30,7 @@ app.post("/api/cmd", async (req, res) => {
     console.error("Error fetching data:", error);
     res.status(500).json({error:"Server Error"})
   }
+});
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
 });
