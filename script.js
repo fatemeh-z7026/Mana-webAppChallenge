@@ -30,7 +30,7 @@ $.addEventListener("DOMContentLoaded", async () => {
     console.log(parsedFinalObj);
 
     if (!Array.isArray(parsedFinalObj) || parsedFinalObj.length === 0) {
-      console.error("Invalid response format Of finalObj!");
+      console.error("finalObj is not a valid array!");
       return;
     }
   } catch (error) {
