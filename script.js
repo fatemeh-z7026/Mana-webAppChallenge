@@ -33,17 +33,82 @@ $.addEventListener("DOMContentLoaded", async () => {
       console.error("finalObj is not a valid array!");
       return;
     }
+
+    //Categorize According To Name
+    const groupedSubjects = {};
+
+    parsedFinalObj.forEach((subject) => {
+      if (Array.isArray(subject.SubjectList)) {
+        subject.SubjectList.forEach((subjectItem) => {
+          const { name, value, type } = subjectItem;
+          const parsedValue = JSON.parse(value);
+
+          if (!groupedSubjects[name]) {
+            groupedSubjects[name] = {
+              type,
+              minTotal: 0,
+              maxTotal: 0,
+              sumTotal: 0,
+              countTotal: 0,
+              avrageTotal: 0,
+            };
+          }
+
+          groupedSubjects[name].minTotal += parsedValue.min
+            ? parseFloat(parsedValue.min)
+            : 0;
+          groupedSubjects[name].maxTotal += parsedValue.max
+            ? parseFloat(parsedValue.max)
+            : 0;
+          groupedSubjects[name].sumTotal += parsedValue.sum
+            ? parseFloat(parsedValue.sum)
+            : 0;
+          groupedSubjects[name].countTotal += parsedValue.count
+            ? parseInt(parsedValue.count)
+            : 0;
+          groupedSubjects[name].avrageTotal = groupedSubjects[
+            name
+          ].avrageTotal = groupedSubjects[name].countTotal
+            ? groupedSubjects[name].sumTotal / groupedSubjects[name].countTotal
+            : 0;
+        });
+      }
+    });
+
+    resultContainer.innerHTML = "";
+    const keyArray = Object.keys(groupedSubjects);
+    keyArray.forEach((name) => {
+      const subjectData = groupedSubjects[name];
+
+      let cardHTML = `
+    <div class="card">
+      <h3>${name} (${subjectData.type})</h3>
+      <select>
+        <option value="">Select...</option>
+        <option value="minTotal">Min</option>
+        <option value="maxTotal">Max</option>
+        <option value="sumTotal">Sum</option>
+        <option value="countTotal">Count</option>
+        <option value="avrageTotal">Avrage</option>
+      </select>
+      <p>Value: 0</p>
+    </div>
+  `;
+
+      resultContainer.insertAdjacentHTML("beforeend", cardHTML);
+
+      const card = resultContainer.querySelector(`.card:last-child`);
+      const select = card.querySelector("select");
+      const valueDisplay = card.querySelector("p");
+
+      select.addEventListener("change", (event) => {
+        const selectedKey = event.target.value;
+        valueDisplay.textContent = `Value: ${subjectData[selectedKey].toFixed(
+          2
+        )}`;
+      });
+    });
   } catch (error) {
     console.error("Error fetching data:", error);
   }
 });
-
-//Create Card
-let card = `<div class="card"><h3>KWH (EMS-Meter)</h3><select>
-            <option value="minTotal">Min</option>
-            <option value="maxTotal">Max</option>
-            <option value="sumTotal">Sum</option>
-            <option value="countTotal">Count</option>
-            <option value="avrageTotal">Avrage</option>
-          </select><p>Value: 3.24</p></div>`;
-// resultContainer.insertAdjacentHTML("afterbegin", card);
