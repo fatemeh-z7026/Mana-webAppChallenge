@@ -21,7 +21,7 @@ $.addEventListener("DOMContentLoaded", async () => {
     const data = await response.json();
     console.log(data);
 
-    if (!data || typeof data !== "object"|| !data.finalObj) {
+    if (!data || typeof data !== "object" || !data.finalObj) {
       console.error("Invalid response format!");
       return;
     }
@@ -29,6 +29,10 @@ $.addEventListener("DOMContentLoaded", async () => {
     const parsedFinalObj = JSON.parse(data.finalObj);
     console.log(parsedFinalObj);
 
+    if (!Array.isArray(parsedFinalObj) || parsedFinalObj.length === 0) {
+      console.error("Invalid response format Of finalObj!");
+      return;
+    }
   } catch (error) {
     console.error("Error fetching data:", error);
   }
