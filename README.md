@@ -15,4 +15,4 @@ This project connects to a local server with an API at:
 bash
 Copy
 Edit
-http://localhost:5001/api
+http://localhost:5001
