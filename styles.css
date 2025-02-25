@@ -1,41 +1,66 @@
 html {
   font-size: 62.5%;
 }
+
 body {
   font-size: 1.6rem;
+  background-color: #f0f2f5;
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  padding: 0;
 }
+
 .title {
   text-align: center;
-  font-size: 3rem;
-  margin-bottom: 3rem;
+  font-size: 3.5rem;
+  color: #1a315e;
+  margin-bottom: 4rem;
+  font-weight: bold;
 }
+
 .card {
-  border: 1px solid #ddd;
   border-radius: 8px;
   padding: 15px;
   margin: 10px;
   background-color: #f9f9f9;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
   display: inline-block;
-  width: 250px;
+  width: 100%;
+  max-width: 250px;
   text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
 .card h3 {
   margin-top: 0;
-  color: #333;
+  color: #a7219e;
+  font-size: 1.8rem;
+  font-weight: 600;
 }
 
 .card select {
-  margin-top: 10px;
-  padding: 5px;
+  margin-top: 15px;
+  padding: 8px;
   width: 100%;
-  font-size: 14px;
-  border-radius: 5px;
+  font-size: 1.4rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  transition: border-color 0.3s ease;
+}
+
+.card select:focus {
+  border-color: #007bff;
+  outline: none;
 }
 
 .card p {
-  font-weight: bold;
-  margin-top: 10px;
+  font-weight: 600;
+  margin-top: 15px;
   color: #007bff;
+  font-size: 1.6rem;
 }
