@@ -1,39 +1,23 @@
+import APIService from "./services/ApiService.js";
+
 let $ = document;
 let resultContainer = $.getElementById("result");
 
+const apiService = new APIService("http://localhost:5001/api");
+const requestData = {
+  cmd: "GetGeneralFrame",
+  subject: "GetEMSFrame",
+  id: "559",
+  type: "Normal",
+  datetime: "2025-01-06 12:12:12",
+};
+
 $.addEventListener("DOMContentLoaded", async () => {
-  try {
-    const response = await fetch("http://localhost:5001/api/cmd", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+  const parsedFinalObj = await apiService.fetchData(requestData);
 
-      body: JSON.stringify({
-        cmd: "GetGeneralFrame",
-        subject: "GetEMSFrame",
-        id: "559",
-        type: "Normal",
-        datetime: "2025-01-06 12:12:12",
-      }),
-    });
-
-    const data = await response.json();
-
-    if (!data || typeof data !== "object" || !data.finalObj) {
-      throw new Error("Invalid response format!");
-    }
-
-    const parsedFinalObj = JSON.parse(data.finalObj);
-
-    if (!Array.isArray(parsedFinalObj) || parsedFinalObj.length === 0) {
-      throw new Error("finalObj is not a valid array!");
-    }
+  if (parsedFinalObj) {
     const groupedSubjects = groupSubjectsByName(parsedFinalObj);
-
     renderGroupedSubjects(groupedSubjects, resultContainer);
-  } catch (error) {
-    console.error("Error fetching data:", error);
   }
 });
 
