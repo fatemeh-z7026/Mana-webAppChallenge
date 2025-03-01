@@ -3,7 +3,7 @@ import APIService from "./services/ApiService.js";
 let $ = document;
 let resultContainer = $.getElementById("result");
 
-const apiService = new APIService("http://localhost:5001/api");
+const apiService = new APIService("http://localhost:5001/api/cmd");
 const requestData = {
   cmd: "GetGeneralFrame",
   subject: "GetEMSFrame",
@@ -13,20 +13,20 @@ const requestData = {
 };
 
 $.addEventListener("DOMContentLoaded", async () => {
-  const parsedFinalObj = await apiService.fetchData(requestData);
+  const finalObj = await apiService.fetchData(requestData);
 
-  if (parsedFinalObj) {
-    const groupedSubjects = groupSubjectsByName(parsedFinalObj);
+  if (finalObj) {
+    const groupedSubjects = groupSubjectsByName(finalObj);
     renderGroupedSubjects(groupedSubjects, resultContainer);
   }
 });
 
 //Categorize According To Name
 
-function groupSubjectsByName(parsedFinalObj) {
+function groupSubjectsByName(finalObj) {
   const groupedSubjects = {};
 
-  parsedFinalObj.forEach((subject) => {
+  finalObj.forEach((subject) => {
     if (Array.isArray(subject.SubjectList)) {
       subject.SubjectList.forEach((subjectItem) => {
         const { name, value, type } = subjectItem;
